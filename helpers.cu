@@ -2,7 +2,7 @@
 //
 // title                  :helpers.cu
 // description            :Helper functions for Gridding.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 

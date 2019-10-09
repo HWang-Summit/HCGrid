@@ -8,7 +8,7 @@
 //                          set wcs for output pixels.
 //                          write output map.
 //                          write reordered map.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 

@@ -2,7 +2,7 @@
 //
 // title                  :healpix.h
 // description            :Healpix helper class.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 

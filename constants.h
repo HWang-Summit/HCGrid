@@ -2,7 +2,7 @@
 //
 // title                  :constants.h
 // description            :Some constants to be used.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 

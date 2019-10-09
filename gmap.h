@@ -7,7 +7,7 @@
 //                          read output map;
 //                          set wcs for output pixels;
 //                          write output map.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 

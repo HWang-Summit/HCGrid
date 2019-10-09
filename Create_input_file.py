@@ -2,7 +2,7 @@
 #
 # title                  :Create_input_file.py
 # description            :Produce random data for test
-# author                 :Hao Wang, Jian Xiao, Ce Yu
+# author                 :
 #
 # --------------------------------------------------------------------
 

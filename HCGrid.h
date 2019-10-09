@@ -2,7 +2,7 @@
 //
 // title                  :HCGrid.h
 // description            :Grid data points to map
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // -------------------------------------------------------------------
 

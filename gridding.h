@@ -2,7 +2,7 @@
 //
 // title                  :gridding.h
 // description            :Sort and Gridding process.
-// author                 :Hao Wang, Jian Xiao, Ce Yu
+// author                 :
 //
 // --------------------------------------------------------------------
 
