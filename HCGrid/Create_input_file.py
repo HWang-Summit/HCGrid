@@ -30,12 +30,12 @@ try:
     opts, args = getopt.getopt(sys.argv[1:], 'hp:i:t:n:s:b:', ['path=', 'input=', 'target=', 'num=', 'sample=', 'beam='])
 except getopt.GetoptError:
     print('./Create_input_file.py -p <absolute path> -i <inputfile> -t <targetfile> -n <number> -s <number samples> -b <beam size>')
-    print('For example\n\tinput file: /home/summit/testfits/go1.fits\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: ./Create_input_file.py -p /home/summit/testfits/ -i go -t target -n 1 -s 10000 -b 300')
+    print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: ./Create_input_file.py -p /home/summit/testfits/ -i input -t target -n 1 -s 10000 -b 300')
     sys.exit(2)
 for opt, arg in opts:
     if opt in ["-h", "--help"]:
         print("usage: ./Create_input_file.py -p <absolute path> -i <inputfile> -t <targetfile> -n <number> -s <number samples> -b <beam size>")
-        print('For example\n\tinput file: /home/summit/testfits/go1.fits\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: ./Create_input_file.py -p /home/summit/testfits/ -i go -t target -n 1 -s 10000 -b 300')
+        print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: ./Create_input_file.py -p /home/summit/testfits/ -i input -t target -n 1 -s 10000 -b 300')
         sys.exit()
     elif opt in ["-p", "--path"]:
         path = arg
