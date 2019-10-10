@@ -27,13 +27,13 @@ num = ""
 try:
 	opts, args = getopt.getopt(sys.argv[1:], 'hp:i:o:n:', ['path=', 'input=', 'output=', 'num='])
 except getopt.GetoptError:
-	print('./Visualize.py -p <absolute path> -i <inputfile> -o <outputfile> -n <number>')
-	print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\toutput file: /home/summit/testfits/out1.fits\n\tCommand: ./Visualize.py -p /home/summit/testfits/ -i input -o out -n 1')
+	print('python Visualize.py -p <absolute path> -i <inputfile> -o <outputfile> -n <number>')
+	print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\toutput file: /home/summit/testfits/out1.fits\n\tCommand: python Visualize.py -p /home/summit/testfits/ -i input -o out -n 1')
 	sys.exit()
 for opt, arg in opts:
 	if opt in ["-h", "--help"]:
-		print("usage: ./Visualize.py -p <absolute path> -i <inputfile> -o <outputfile> -n <number>'")
-		print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\toutput file: /home/summit/testfits/out1.fits\n\tCommand: ./Visualize.py -p /home/summit/testfits/ -i input -o out -n 1')
+		print("usage: python Visualize.py -p <absolute path> -i <inputfile> -o <outputfile> -n <number>'")
+		print('For example\n\tinput file: /home/summit/testfits/input1.fits\n\toutput file: /home/summit/testfits/out1.fits\n\tCommand: python Visualize.py -p /home/summit/testfits/ -i input -o out -n 1')
 		sys.exit()
 	elif opt in ["-p", "--path"]:
 		path = arg
