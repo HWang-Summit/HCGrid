@@ -33,7 +33,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
 
 ## Usage
 ### Minimal example
-Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel and run the gridding function.
+Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel, pre-sorting sample points and run the gridding function.
 1. define a FITS header and define gridding kernel:
 ``` python
 /*Read input points*/
@@ -70,4 +70,46 @@ _prepare_grid_kernel(
 	sphere_radius, 
 	hpx_max_resolution
 	);
+```
+2. Select a suitable pre-sorting interface to pre-sort sampling points. Our program provides a variety of pre-sorting interfaces to preorder the sampleing points. shch as "BLOCK_INDIRECT_SORT", "PARALLEL_STABLE_SORT", etc. Through a series of experiments, we demonstrated that the BlockIndirectSort based on CPU multi-thread could achieve the best performance when dealing with large-scale data. So, we set BlockIndirectSort as the default pre-sorting interface in our program.
+``` C++
+/* 
+ * func: Sort input points with CPU
+ * sort_param:
+ * - BLOCK_INDIRECT_SORT
+ * - PARALLEL_STABLE_SORT
+ * - STL_SORT
+ *   */
+void init_input_with_cpu(const int &sort_param) {
+    double iTime1 = cpuSecond();
+    uint32_t data_shape = h_GMaps.data_shape;
+    std::vector<HPX_IDX> V(data_shape);
+    V.reserve(data_shape);
+
+    // Sort input points by param
+    double iTime2 = cpuSecond();
+    if (sort_param == BLOCK_INDIRECT_SORT) {
+        boost::sort::block_indirect_sort(V.begin(), V.end());
+    } else if (sort_param == PARALLEL_STABLE_SORT) {
+        boost::sort::parallel_stable_sort(V.begin(), V.end());
+    } else if (sort_param == STL_SORT) {
+        std::sort(V.begin(), V.end());
+    }
+}
+
+/* 
+ * func: Sort input points with Thrust
+ * sort_param:
+ * - THRUST
+ * */
+void init_input_with_thrust(const int &sort_param) {
+    double iTime1 = cpuSecond();
+    uint32_t data_shape = h_GMaps.data_shape;
+
+    // Sort input points by param
+    double iTime2 = cpuSecond();
+    if (sort_param == THRUST) {
+        thrust::sort_by_key(h_hpx_idx, h_hpx_idx + data_shape, in_inx);
+    }
+}
 ```
