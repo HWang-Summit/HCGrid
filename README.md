@@ -28,5 +28,6 @@ The main work of HCGrid include three-part:
 We kept the dependencies as minimal as possible. The following packages are required:
 - cfitsio-3.47
 - wcslib-5.16
+
 All of these packages can be found in "Dependencies" directory.
 
