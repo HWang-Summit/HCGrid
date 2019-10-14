@@ -8,4 +8,3 @@ HCGrid is a convolution-based gridding framework for radio astronomy on CPU/GPU 
 
 ## implementation
 
-![Architure1](0A0711E4577B4D09BF9E3824A3520A49)
