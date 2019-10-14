@@ -20,4 +20,7 @@ The main work of HCGrid include three-part:
 - Scales well on CPU/GPU heterogeneous platforms.
 
 ## Build
+- The Makefile is very simple, you can easily adapt it to any Unix-like OS.
+- Change the path of CUDA to match your server, in general, the default installation path for CUDA is /usr/local/cuda-xx.
+- If using profiling, it is necessary to use the compile option --ptxas-options=-v to view all static resources identified by the kernel during the compilation phase, such as register resources, shared memory resources, etc. 
 
