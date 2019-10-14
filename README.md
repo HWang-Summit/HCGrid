@@ -29,5 +29,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
 - cfitsio-3.47
 - wcslib-5.16
 
-All of these packages can be found in "Dependencies" directory.
+ All of these packages can be found in "Dependencies" directory (order versions of these libraries may work, but we didn't test these!).
 
+## Usage
+### Minimal example
