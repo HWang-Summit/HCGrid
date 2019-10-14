@@ -33,3 +33,41 @@ We kept the dependencies as minimal as possible. The following packages are requ
 
 ## Usage
 ### Minimal example
+Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel and run the gridding function.
+1. define a FITS header and define gridding kernel:
+``` python
+/*Read input points*/
+lon,lat,data = read_input_map(...);
+
+/*define target FITS/WCS header*/
+header = {
+	'NAXIS': 3,
+	'NAXIS1': dnaxis1,
+	'NAXIS2': dnaxis2,
+	'NAXIS3': 1,  
+	'CTYPE1': 'RA---SIN',
+	'CTYPE2': 'DEC--SIN',
+	'CUNIT1': 'deg',
+	'CUNIT2': 'deg',
+	'CDELT1': -pixsize,
+	'CDELT2': pixsize,
+	'CRPIX1': dnaxis1 / 2.,
+	'CRPIX2': dnaxis2 / 2.,
+	'CRVAL1': mapcenter[0],
+	'CRVAL2': mapcenter[1],
+	}
+
+/*Set kernel*/
+kernel_type = GAUSS1D;
+kernelsize_fwhm = 300./3600.;
+kernelsize_sigma = 0.2;
+kernel_params[0] = kernelsize_sigma;
+sphere_radius = 3.*kernelsize_sigma;
+hpx_max_resolution=kernelsize_sigma/2;
+_prepare_grid_kernel(
+	kernel_type, 
+	kernel_params, 
+	sphere_radius, 
+	hpx_max_resolution
+	);
+```
