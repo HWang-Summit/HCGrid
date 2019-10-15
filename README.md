@@ -201,5 +201,5 @@ For example, you can type:
 For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide.
 
 <center class="half">
-  <img src=pic/input1.png width="34.5%"/><img src=pic/output1.png width="35%"/>
+  <img src=pic/input1.png width="50%"/><img src=pic/output1.png width="50%"/>
 </center>
