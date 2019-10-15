@@ -34,7 +34,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
 ## Usage
 ### Minimal example
 Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel, pre-sorting sample points and run the gridding function.
-1. define a FITS header and define gridding kernel:
+1. Define a FITS header and define gridding kernel:
 ``` python
 /*Read input points*/
 lon,lat,data = read_input_map(...);
@@ -111,5 +111,60 @@ void init_input_with_thrust(const int &sort_param) {
     if (sort_param == THRUST) {
         thrust::sort_by_key(h_hpx_idx, h_hpx_idx + data_shape, in_inx);
     }
+}
+```
+3. Do the gridding.
+``` C++
+/* Gridding process. */
+void solve_gridding(const char *infile, const char *tarfile, const char *outfile, const char *sortfile, 
+                    const int& param, const int &bDim) {
+
+    // Read input points.
+    read_input_map(infile);
+
+    // Read output map.
+    read_output_map(tarfile);
+
+    // Set wcs for output pixels.
+    set_WCS();
+
+    // Initialize output spectrals and weights.
+    init_output();
+
+    // Block Indirect Sort input points by their healpix indexes.
+    if (param == THRUST) {
+        init_input_with_thrust(param);
+    } else {
+        init_input_with_cpu(param);
+    }
+
+    // Alloc data for GPU.
+    data_alloc();
+
+    // Send data from CPU to GPU.
+    data_h2d();
+    printf("h_zyx[1]=%d, h_zyx[2]=%d, ", h_zyx[1], h_zyx[2]);
+
+    // Set block and thread.
+    dim3 block(bDim);
+    dim3 grid((h_GMaps.block_warp_num * h_zyx[1] - 1) / (block.x / 32) + 1);
+    printf("grid.x=%d, block.x=%d, ", grid.x, block.x);
+
+    // Call device kernel.
+    hcgrid<<< grid, block >>>(d_lons, d_lats, d_data, d_weights, d_xwcs, d_ywcs, d_datacube, d_weightscube, d_hpx_idx);
+
+    // Send data from GPU to CPU
+    data_d2h();
+
+    // Write output FITS file
+    write_output_map(outfile);
+
+    // Write sorted input FITS file
+    if (sortfile) {
+        write_ordered_map(infile, sortfile);
+    }
+
+    // Release data
+    data_free();
 }
 ```
