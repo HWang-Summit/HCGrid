@@ -171,6 +171,7 @@ void solve_gridding(const char *infile, const char *tarfile, const char *outfile
 ### Minimal example
 In the terminal, change directory to HCGrid, then:
 - make HCGrid (generate an executable file: HCGrid).
+- Type "**./HCGrid -h**" to get the detail parameter guide.
 - ./HCGrid [options]. The options include the following parameter:
 
 | Parameter | Description | 
@@ -190,10 +191,11 @@ For example, you can type:
 ``` C++
  ./HCGrid  --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 96
  ```
- 
- - Type "**./HCGrid -h**" to get the detail parameter guide.
- #### Notice:
+ ***Notice:***
  1. fits_path represents the absolute path to all FITS files (including input files, target map files, and output files).
  2. The gridding framework not only supports storing the data after the gridding task is completed as a FITS file but also supporting storing the CPU multi-threaded sorted data as a FITS file.The reason for this is that can use the sorted data to analyze the performance of GPU-based convolution computation accurately. When typing the parameter of "sorted_file", the sorted data will be stored in FITS,otherwise, it will not save.
  3. The parameter "block_num" represents the number of thread in each block. Changing the value of it will also change the number of block in the grid to realize the reasonable thread organization configuration. The best value of block_num has relationship with the register of GPU. For example, For Tesla K40, the total number of registers available per block is *64K*. And the compilation report shows that the kernel of HCGrid calls a total of 184 registers, because the kernel does not use shared memory to store parameters, so it is expected that each thread block can execute about 64K/184 $\approx$ 356 threads concurrently. So, the better value of block_num should close to 356.
  4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid.Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
+
+### Supplementary explanation
+For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide.
