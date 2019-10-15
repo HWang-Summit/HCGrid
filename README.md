@@ -32,6 +32,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
  All of these packages can be found in "Dependencies" directory (order versions of these libraries may work, but we didn't test these!).
 
 ## Usage
+### DEMO
 Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel, pre-sorting sample points and run the gridding function.
 1. Define a FITS header and define gridding kernel:
 ``` python
