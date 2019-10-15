@@ -185,6 +185,7 @@ In the terminal, change directory to HCGrid, then:
 | ord_arg    | Select the preorder function        |
 | block_num  | The number of thread in each block  |
 | coarsening_factor| The value of coarsening factor|
+
 For example, you can type:
 ``` C++
  ./HCGrid  --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 96
