@@ -203,4 +203,3 @@ For ease of testing and resulting verification, we provide "Create_input_file.py
 <center class="half">
   <img src=pic/input1.png width="50%" alt="adsd" /><img src=pic/output1.png width="50%"/>
 </center>
-![s](pic/input1.png)![描述](pic/output1.png)
