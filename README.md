@@ -202,3 +202,7 @@ For ease of testing and resulting verification, we provide "Create_input_file.py
 
 <P align="center" title="input data"><img src=pic/input1.png width="50%"></img></p>
 <P align="center" title="output data"><img src=pic/output1.png width="50%"></img></p>
+
+<center class="half">
+  <img src=pic/input1.png title="input data" width="50%"/><img src=pic/output1.png title="out put data" width="50%"/>
+</center> 
