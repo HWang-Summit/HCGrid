@@ -198,7 +198,4 @@ For example, you can type:
  4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid.Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
 
 ### Supplementary explanation
-For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide.
-
-<P align="center" title="input data"><img src=pic/input1.png width="50%"></img></p>
-<P align="center" title="output data"><img src=pic/output1.png width="50%"></img></p>
+For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. 
