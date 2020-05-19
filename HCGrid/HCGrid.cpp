@@ -32,7 +32,8 @@ int main(int argc, char **argv){
                     &option_index)) != EOF){
         switch(pcl){
             case 'h':
-                fprintf(stderr, "useage: ./HCGrid -p <absolute path> -i <input file> -t <target file> -o <output file> -s <sorted file> -n <number> -b <beam>");
+                fprintf(stderr, "useage: ./HCGrid --fits_path <absolute path> --input_file <input file> --target_file <target file> \
+				--sorted_file <sorted file> ---output_file <output file>  ---fits_id <number> --beam_size <beam> --order_arg <order> -block_num <num>");
                 return 1;
             case 'p':
                 path = optarg;
