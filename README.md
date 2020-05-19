@@ -4,7 +4,7 @@
 
 ## Introduction
 Gridding refers to map the non-uniform sampled data to a uniform grid, which is one of the key steps in the data processing pipeline of the radio telescope. The computation performance is the main bottleneck of gridding, which affects the whole performance of the radio data reduction pipeline and even determines the release speed of available astronomical scientific data. For the single-dish radio telescope, the representative solution for this problem is implemented on the multi-CPU platform and that mainly based on the convolution gridding algorithm. Such methods can achieve a good performance through parallel threads on multi-CPU architecture, however, its performance is still limited to a certain extent by the homogeneous multi-core hardware architecture.
-HCGrid is a convolution-based gridding framework for radio astronomy on CPU/GPU heterogeneous platform, which can efficiently resample raw non-uniform sample data into a uniform grid of arbitrary resolution, generate DataCube and save the processing result as FITS file. 
+HCGrid is a convolution-based gridding framework for radio astronomy in CPU/GPU heterogeneous platform, which can efficiently resample raw non-uniform sample data into a uniform grid of arbitrary resolution, generate DataCube and save the processing result as FITS file. 
 
 ## implementation
 <P align="center"><img src=pic/HCGrid.png width="50%"></img></p>
@@ -17,7 +17,7 @@ The main work of HCGrid include three-part:
 ## Features
 - Supports WCS projection system as target.
 - High performance.
-- Scales well on CPU/GPU heterogeneous platforms.
+- Scales well in CPU/GPU heterogeneous platforms.
 
 ## Build
 - The Makefile is very simple, you can easily adapt it to any Unix-like OS.
@@ -28,6 +28,7 @@ The main work of HCGrid include three-part:
 We kept the dependencies as minimal as possible. The following packages are required:
 - cfitsio-3.47
 - wcslib-5.16
+- CUDA Toolkit
 
  All of these packages can be found in "Dependencies" directory (order versions of these libraries may work, but we didn't test these!).
 
@@ -174,10 +175,10 @@ In the terminal, change directory to HCGrid, then:
 - Type "**./HCGrid -h**" to get the detail parameter guide.
 - ./HCGrid [options]. The options include the following parameter:
 
-| Parameter | Description | 
-| :----------| :-----------------------------------| 
-| fits_path  | Absolute path of FITS file          | 
-| input_file | Name of unsorted input FITS file    | 
+| Parameter | Description |
+| :----------| :-----------------------------------|
+| fits_path  | Absolute path of FITS file          |
+| input_file | Name of unsorted input FITS file    |
 | target_file| Name of target FITS file            |
 | output_file| Name of output FITS file            |
 | sorted_file| Name of sorted input FITS file      |
@@ -190,7 +191,7 @@ In the terminal, change directory to HCGrid, then:
 For example, you can type:
 ``` C++
  ./HCGrid  --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 96
- ```
+```
  ***Notice:***
  1. fits_path represents the absolute path to all FITS files (including input files, target map files, and output files).
  2. The gridding framework not only supports storing the data after the gridding task is completed as a FITS file but also supporting storing the CPU multi-threaded sorted data as a FITS file.The reason for this is that can use the sorted data to analyze the performance of GPU-based convolution computation accurately. When typing the parameter of "sorted_file", the sorted data will be stored in FITS,otherwise, it will not save.
@@ -199,4 +200,5 @@ For example, you can type:
 
 ### Supplementary explanation
 For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. As show below, the left and right images is the gridding results of HCGrid with 10 and 20 source point source.
+
 <P align="center" title="left: 10 source point  right: 20 source point"><img src=pic/gridding_results.png width="100%"></img></p>
