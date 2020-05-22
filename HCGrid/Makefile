@@ -39,5 +39,5 @@ HCGrid: helpers.o healpix.o gmap.o gridding.o HCGrid.o
 	@ echo ./$@ $+
 	$(NVCC) -O3 -ccbin $(CXX) -Wno-deprecated-gpu-targets $(INCLUDE) -o $@ $+ $(CUDA_ARCH) $(LIBRARIES) $(FITS_FLAGS) $(CXX_FLAGS)
 
-clear_test:
+clean:
 	rm -rf *.o HCGrid
