@@ -60,7 +60,7 @@ void _prepare_grid_kernel(uint32_t kernel_type, double *kernel_params, double sp
 
     // Recompute healpix lookup table in case kernel sphere has changed
     if(fabs(last_sphere_radius-sphere_radius) > 3e-5 || fabs(last_hpxmaxres-hpx_max_res) > 3e-5){
-        uint64_t nside = set_optimal_nside(D2R * hpx_max_res);
+        uint64_t nside = set_optimal_nside(DEG2RAD * hpx_max_res);
         _Healpix_init(nside, RING);
         last_sphere_radius = sphere_radius;
         last_hpxmaxres = hpx_max_res;
@@ -68,7 +68,7 @@ void _prepare_grid_kernel(uint32_t kernel_type, double *kernel_params, double sp
     }
 
     h_GMaps.sphere_radius = sphere_radius;
-    h_GMaps.disc_size = (D2R * sphere_radius + h_Healpix._resolution);
+    h_GMaps.disc_size = (DEG2RAD * sphere_radius + h_Healpix._resolution);
 }
 
 /* Read input points. */
