@@ -321,7 +321,7 @@ __global__ void hcgrid (
             }
 
             // find position of lpix
-            uint32_t upix_idx = searchLastPosLessThan(d_hpx_idx, start_int, end_int, lpix);
+            uint32_t upix_idx = searchLastPosLessThan(d_hpx_idx, start_int - 1, end_int, lpix);
             ++upix_idx;
             if (upix_idx > end_int) {
                 upix_idx = d_const_GMaps.data_shape;
