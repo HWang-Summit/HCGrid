@@ -40,7 +40,7 @@ void _prepare_grid_kernel(uint32_t kernel_type, double *kernel_params, double sp
     // Set kernel type & parameters
     if(kernel_type == GAUSS1D){// params = ('0.5 / kernel_sigma ** 2',)
         num_params = 1;
-        kernel_params[0] = pow(0.5 / kernel_params[0], 2.);
+        kernel_params[0] = 0.5 / pow(kernel_params[0], 2.);
         h_GMaps.bearing_needed = false;
     }
     else if(kernel_type == GAUSS2D){// params = ('kernel_sigma_maj', 'kernel_sigma_min', 'PA')
