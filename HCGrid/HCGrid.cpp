@@ -105,7 +105,7 @@ int main(int argc, char **argv){
     uint32_t kernel_type = GAUSS1D;
     double kernelsize_fwhm = 300. / 3600.;
     if (beam) {
-        double kernelsize_fwhm = atoi(beam) / 3600.;
+        kernelsize_fwhm = atoi(beam) / 3600.;
     }
     double kernelsize_sigma = kernelsize_fwhm / sqrt(8*log(2));
     double *kernel_params;
