@@ -258,22 +258,22 @@ __global__ void hcgrid (
         double *d_weightscube,
         uint64_t *d_hpx_idx) {
     uint32_t warp_id = blockIdx.x * (blockDim.x / 32) + threadIdx.x / 32;
-    uint32_t tid = ((warp_id % d_const_GMaps.block_warp_num) * 32 + threadIdx.x % 32) * d_const_GMaps.factor;
-    if (tid < d_const_zyx[1]) {
-        uint32_t left = tid;
+    uint32_t thread_id = ((warp_id % d_const_GMaps.block_warp_num) * 32 + threadIdx.x % 32) * d_const_GMaps.factor;
+    if (thread_id < d_const_zyx[1]) {
+        uint32_t left = thread_id;
         uint32_t right = left + d_const_GMaps.factor - 1;
         if (right >= d_const_zyx[1]) {
             right = d_const_zyx[1] - 1;
         }
-        tid = (warp_id / d_const_GMaps.block_warp_num) * d_const_zyx[1];
-        left = left + tid;
-        right = right + tid;
+        uint32_t step = (warp_id / d_const_GMaps.block_warp_num) * d_const_zyx[1];
+        left = left + step;
+        right = right + step;
         double temp_weights[3], temp_data[3], l1[3], b1[3];
-        for (tid = left; tid <= right; ++tid) {
-            temp_weights[tid-left] = d_weightscube[tid];
-            temp_data[tid-left] = d_datacube[tid];
-            l1[tid-left] = d_xwcs[tid] * DEG2RAD;
-            b1[tid-left] = d_ywcs[tid] * DEG2RAD;
+        for (thread_id = left; thread_id <= right; ++thread_id) {
+            temp_weights[thread_id-left] = d_weightscube[thread_id];
+            temp_data[thread_id-left] = d_datacube[thread_id];
+            l1[thread_id-left] = d_xwcs[thread_id] * DEG2RAD;
+            b1[thread_id-left] = d_ywcs[thread_id] * DEG2RAD;
         }
 
         // get northeast ring and southeast ring
@@ -338,28 +338,26 @@ __global__ void hcgrid (
                 double in_weights = d_weights[upix_idx];
                 double in_data = d_data[upix_idx];
 
-                for (tid = left; tid <= right; ++tid) {
-                    double sdist = true_angular_distance(l1[tid-left], b1[tid-left], l2, b2) * RAD2DEG;
+                for (thread_id = left; thread_id <= right; ++thread_id) {
+                    double sdist = true_angular_distance(l1[thread_id-left], b1[thread_id-left], l2, b2) * RAD2DEG;
                     double sbear = 0.;
                     if (d_const_GMaps.bearing_needed) {
-                        sbear = great_circle_bearing(l1[tid-left], b1[tid-left], l2, b2);
+                        sbear = great_circle_bearing(l1[thread_id-left], b1[thread_id-left], l2, b2);
                     }
                     if (sdist < d_const_GMaps.sphere_radius) {
                         double sweight = kernel_func_ptr(sdist, sbear);
                         double tweight = in_weights * sweight;
-                        temp_data[tid-left] += in_data * tweight;
-                        temp_weights[tid-left] += tweight;
+                        temp_data[thread_id-left] += in_data * tweight;
+                        temp_weights[thread_id-left] += tweight;
                     }
+                    d_datacube[thread_id] = temp_data[thread_id - left];
+                    d_weightscube[thread_id] = temp_weights[thread_id - left];
                 }
                 ++upix_idx;
             }
 
             start_int = end_int;
             ++uring;
-        }
-        for (tid = left; tid <= right; ++tid) {
-            d_datacube[tid] = temp_data[tid-left];
-            d_weightscube[tid] = temp_weights[tid-left];
         }
     }
     __syncthreads();
