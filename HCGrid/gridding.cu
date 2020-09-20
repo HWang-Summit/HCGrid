@@ -277,11 +277,10 @@ __global__ void hcgrid (
         }
 
         // get northeast ring and southeast ring
-        uint64_t upix = d_ang2pix(HALFPI-b1[0], l1[0]);
-        double disc_theta, disc_phi;
-        d_pix2ang(upix, disc_theta, disc_phi);
+        double disc_theta = HALFPI - b1[0];
+        double disc_phi = l1[0];
         double utheta = disc_theta - d_const_GMaps.disc_size;
-        upix = d_ang2pix(utheta, disc_phi);
+        uint64_t upix = d_ang2pix(utheta, disc_phi);
         uint64_t uring = d_pix2ring(upix);
         if (uring < d_const_Healpix.firstring){
             uring = d_const_Healpix.firstring;
@@ -305,8 +304,8 @@ __global__ void hcgrid (
             d_pix2ang(startpix, utheta, uphi);
 
             // get lpix and rpix
-            upix = d_ang2pix(HALFPI-b1[0], l1[0]);
-            d_pix2ang(upix, disc_theta, disc_phi);
+            disc_theta = HALFPI - b1[0];
+            disc_phi = l1[0];
             uphi = disc_phi - d_const_GMaps.disc_size;
             uint64_t lpix = d_ang2pix(utheta, uphi);
             if (!(lpix >= startpix && lpix < startpix+num_pix_in_ring)) {
