@@ -202,3 +202,11 @@ For example, you can type:
 For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. As show below, the left and right images is the gridding results of HCGrid with 10 and 20 source point source.
 
 <P align="center" title="left: 10 source point  right: 20 source point"><img src=pic/T_B.png width="100%"></img></p>
+
+### Community Contribution and Advice
+
+If you have any question or ideas, please don't skimp on your suggestions and welcome make a pull request. Moreover, you can contact us through the follow address.
+
+imwh@tju.edu.cn
+
+jianxiao@tju.edu.cn
