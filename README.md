@@ -207,6 +207,6 @@ For ease of testing and resulting verification, we provide "Create_input_file.py
 
 If you have any question or ideas, please don't skimp on your suggestions and welcome make a pull request. Moreover, you can contact us through the follow address.
 
-imwh@tju.edu.cn
+- imwh@tju.edu.cn
 
-jianxiao@tju.edu.cn
+- jianxiao@tju.edu.cn
