@@ -4,14 +4,14 @@
 
 ## Introduction
 Gridding refers to map the non-uniform sampled data to a uniform grid, which is one of the key steps in the data processing pipeline of the radio telescope. The computation performance is the main bottleneck of gridding, which affects the whole performance of the radio data reduction pipeline and even determines the release speed of available astronomical scientific data. For the single-dish radio telescope, the representative solution for this problem is implemented on the multi-CPU platform and that mainly based on the convolution gridding algorithm. Such methods can achieve a good performance through parallel threads on multi-CPU architecture, however, its performance is still limited to a certain extent by the homogeneous multi-core hardware architecture.
-HCGrid is a convolution-based gridding framework for radio astronomy in CPU/GPU heterogeneous platform, which can efficiently resample raw non-uniform sample data into a uniform grid of arbitrary resolution, generate DataCube and save the processing result as FITS file. 
+HCGrid is a convolution-based gridding framework for radio astronomy in CPU/GPU heterogeneous platform, which can efficiently re-sample raw non-uniform sample data into a uniform grid of arbitrary resolution, generate Data Cube and save the processing result as FITS file. 
 
 ## implementation
 <P align="center"><img src=pic/HCGrid.png width="50%"></img></p>
 The main work of HCGrid include three-part:
 
 - **Initialization module:** This module mainly initializes some parameters involved in the calculation process, such as setting the size of the sampling space, output resolution and other parameters.
-- **Gridding module:** The core functional modules of the HCGrid. The key to improving gridding performance is to increase the speed of convolution calculations. First, in order to reduce the search space of the original sampling points, we use a parallel ordering algorithm to preorder the sampling points based on HEALPix on the CPU platform and propose an efficient two-level lookup table to speed up the acquisition of sampling points. Then, accelerating convolution by utilizing the high parallelism of GPU and through related performance optimization strategies based on CUDA architecture to further improve the gridding performance.
+- **Gridding module:** The core functional modules of the HCGrid. The key to improving gridding performance is to increase the speed of convolution calculations. First, in order to reduce the search space of the original sampling points, we use a parallel ordering algorithm to pre-order the sampling points based on HEALPix on the CPU platform and propose an efficient two-level lookup table to speed up the acquisition of sampling points. Then, accelerating convolution by utilizing the high parallelism of GPU and through related performance optimization strategies based on CUDA architecture to further improve the gridding performance.
 - **Results Process module:** Responsible for verifying the accuracy of gridding results; Save processing results as FITS files and visualize the computing results.
 
 ## Features
@@ -57,7 +57,8 @@ header = {
 	'CRVAL1': mapcenter[0],
 	'CRVAL2': mapcenter[1],
 	}
-
+```
+```c++
 /*Set kernel*/
 kernel_type = GAUSS1D;
 kernelsize_fwhm = 300./3600.;
@@ -72,7 +73,9 @@ _prepare_grid_kernel(
 	hpx_max_resolution
 	);
 ```
-2. Select a suitable pre-sorting interface to pre-sort sampling points. Our program provides a variety of pre-sorting interfaces to preorder the sampleing points. shch as "BLOCK_INDIRECT_SORT", "PARALLEL_STABLE_SORT", etc. Through a series of experiments, we demonstrated that the BlockIndirectSort based on CPU multi-thread could achieve the best performance when dealing with large-scale data. So, we set BlockIndirectSort as the default pre-sorting interface in our program.
+
+2. Select a suitable pre-sorting interface to pre-sort sampling points. Our program provides a variety of pre-sorting interfaces to pre-order the sampling points. such as "BLOCK_INDIRECT_SORT", "PARALLEL_STABLE_SORT", etc. Through a series of experiments, we demonstrated that the BlockIndirectSort based on CPU multi-thread could achieve the best performance when dealing with large-scale data. So, we set BlockIndirectSort as the default pre-sorting interface in our program.
+
 ``` C++
 /* 
  * func: Sort input points with CPU
@@ -196,12 +199,12 @@ For example, you can type:
  1. fits_path represents the absolute path to all FITS files (including input files, target map files, and output files).
  2. The gridding framework not only supports storing the data after the gridding task is completed as a FITS file but also supporting storing the CPU multi-threaded sorted data as a FITS file.The reason for this is that can use the sorted data to analyze the performance of GPU-based convolution computation accurately. When typing the parameter of "sorted_file", the sorted data will be stored in FITS,otherwise, it will not save.
  3. The parameter "block_num" represents the number of thread in each block. Changing the value of it will also change the number of block in the grid to realize the reasonable thread organization configuration. The best value of block_num has relationship with the register of GPU. For example, For Tesla K40, the total number of registers available per block is *64K*. And the compilation report shows that the kernel of HCGrid calls a total of 184 registers, because the kernel does not use shared memory to store parameters, so it is expected that each thread block can execute about 64K/184 $\approx$ 356 threads concurrently. So, the better value of block_num should close to 356.
- 4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid.Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
+ 4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid. Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
 
 ### Supplementary explanation
-For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. As show below, the left and right images is the gridding results of HCGrid with 10 and 20 source point source.
+For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. The figure below is an example of HCGrid gridding results.
 
-<P align="center" title="left: 10 source point  right: 20 source point"><img src=pic/T_B.png width="100%"></img></p>
+<P align="center"><img src=pic/T_B.png width="100%"></img></p>
 
 ### Community Contribution and Advice
 
