@@ -37,7 +37,8 @@
 
 int main(int argc, char **argv){
     // Get FITS files from command
-    char *path = NULL, *ifile = NULL, *tfile = NULL, *ofile = NULL, *sfile = NULL, *num = NULL, *beam = NULL, *order = NULL, *bDim = NULL, *factor = NULL;
+    char *path = NULL, *ifile = NULL, *tfile = NULL, *ofile = NULL, *sfile = NULL, *num = NULL, \
+    *beam = NULL, *order = NULL, *bDim = NULL, *Rg= NULL, *Sp = NULL, *factor = NULL;
     char pcl;
     int option_index = 0;
     static const struct option long_options[] = {
@@ -51,6 +52,8 @@ int main(int argc, char **argv){
         {"beam_size", required_argument, NULL, 'b'},            // beam size of FITS file
         {"order_arg", required_argument, NULL, 'd'},            // sort parameter
         {"block_num", required_argument, NULL, 'a'},            // the number of thread in each block
+        {"register_num", required_argument, NULL, 'r'},        // the number of register in SM
+        {"sp_num", required_argument, NULL, 'm'},              // the number of SP in each SM
         {"coarsening_factor", required_argument, NULL, 'f'},    // the value of coarsening factor
         {0, 0, 0, 0}
     };
@@ -88,6 +91,12 @@ int main(int argc, char **argv){
                 break;
             case 'a':
                 bDim = optarg;
+                break;
+            case 'r':
+                Rg = optarg;
+                break;
+            case 'm':
+                Sp = optarg;
                 break;
             case 'f':
                 factor = optarg;
@@ -142,6 +151,9 @@ int main(int argc, char **argv){
     double hpx_max_resolution = kernelsize_sigma / 2.;
     _prepare_grid_kernel(kernel_type, kernel_params, sphere_radius, hpx_max_resolution);
 
+    // Get Register num and SP num
+    int Register, SP, T_max, T_max_h, BlockDim_x;
+
     // Gridding process
     h_GMaps.factor = 1;
     if (factor) {
@@ -149,15 +161,37 @@ int main(int argc, char **argv){
     }
     printf("h_GMaps.factor=%d, ", h_GMaps.factor);
     if (sfile) {
-        if (bDim)
+        if (bDim){
             solve_gridding(infile, tarfile, outfile, sortfile, atoi(order), atoi(bDim));
-        else
-            solve_gridding(infile, tarfile, outfile, sortfile, atoi(order), 96);
+        }else if ( Rg && Sp){
+                Register = atoi(Rg) * 1024;
+                SP = atoi(Sp);
+                T_max = Register / 184;
+                T_max_h = T_max / 2;
+                if ((SP >= 32) && (SP < T_max_h))
+                    BlockDim_x = SP;
+                else
+                    BlockDim_x = T_max - T_max % 32;
+            printf("blockDim_x=%d\n", BlockDim_x);
+            solve_gridding(infile, tarfile, outfile, sortfile, atoi(order), BlockDim_x);
+        } else
+            solve_gridding(infile, tarfile, outfile, sortfile, atoi(order), 64);
     } else {
-        if (bDim)
+        if (bDim){
             solve_gridding(infile, tarfile, outfile, NULL, atoi(order), atoi(bDim));
+        }else if ( Rg && Sp){
+                Register = atoi(Rg) * 1024;
+                SP = atoi(Sp);
+                T_max = Register / 184;
+                T_max_h = T_max / 2;
+                if ((SP >= 32) && (SP < T_max_h))
+                    BlockDim_x = SP;
+                else
+                    BlockDim_x = T_max - T_max % 32;
+            solve_gridding(infile, tarfile, outfile, NULL, atoi(order), BlockDim_x);
+        }
         else
-            solve_gridding(infile, tarfile, outfile, NULL, atoi(order), 96);
+            solve_gridding(infile, tarfile, outfile, NULL, atoi(order), 64);
     }
 
     return 0;
