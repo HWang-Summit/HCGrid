@@ -199,7 +199,7 @@ After setting the relevant parameters (for example, sphere_radius in HCGrid.cpp,
 1. Create the target map file:
 
 ```shell
-$ python Creat_target_file.py -p /home/summit/Project/github/HCGrid-master/HCGrid/data/ -t target -n 1 -b 300
+$ python Creat_target_file.py -p /home/summit/Project/HCGrid/data/ -t target -n 1 -b 300
 ```
 
 2. Compile HCGrid:
