@@ -217,11 +217,9 @@ For the thread organization configuration, the architecture of the GPU and the n
 SM should be carefully adjusted, in order to select the most appropriate scheme to improve the performance of GPU parallelization. For mainstream GPU architectures by NVIDIA, including Turing,
 Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
 
-```text
-![](http://latex.codecogs.com/gif.latex?
-\T_{max} = (Register\_{num}) / 184
-```
+https://latex.codecogs.com/gif.latex?
 
+\dpi{400}\alpha&space;+&space;\frac{2\beta}{\gamma}
 $$
 T_{max} = (Register\_{num}) / 184
 $$
