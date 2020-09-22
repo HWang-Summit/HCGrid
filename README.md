@@ -202,7 +202,7 @@ After setting the relevant parameters (for example, sphere_radius in HCGrid.cpp,
 $ python Creat_target_file.py -p /home/summit/Project/HCGrid/data/ -t target -n 1 -b 300
 ```
 
-**Note:** You need to set the relevant parameters of target_map according to the coverage sky area and beam width of the original sampled data. For details, please refer to "Creat_target_file.py " file.
+**Note:** You need to set the relevant parameters of target_map according to the coverage sky area and beam width of the sampled data. For details, please refer to "Creat_target_file.py " file.
 
 2. Compile HCGrid:
 
@@ -213,13 +213,34 @@ $ make HCGrid
 
 3. Utilizing  HCGrid do the gridding:
 
-``` shell
-$ ./HCGrid --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 64
-```
- 
+For the thread organization configuration, the architecture of the GPU and the number of SPs in the
+SM should be carefully adjusted, in order to select the most appropriate scheme to improve the performance of GPU parallelization. For mainstream GPU architectures by NVIDIA, including Turing,
+Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
+$$
+T_{max} = (Register\_{num}) / 184
+$$
+
+$$
+blockdim.x = \left\{
+\begin{array}{rcl}
+SP        &      & {32      <      SP <\frac {1}{2}T_{max}}\\
+T_{max}   &      & {SP >= \frac {1}{2}T_{max}}\\
+other    &      & {Based\ on\ astual\ test\ results}\\
+\end{array} \right.
+$$
+
+$Register\_{num}$ represents the total number of registers available for each thread block of the GPU, and $T\_{max}$is the maximum number of threads that each thread block can execute simultaneously when running HCGrid. $SP$ is the number of SPs in each SM of the GPU.   
+
+When no specific performance analysis is performed for the actual application environment, users can use the following methods for gridding, and better performance may be obtained at this time.
 
 ```shell
 $ ./HCGrid --fits_path /home/summit/Project/cygrid/ --input_file input_testB_ --target_file target_testB_ --output_file output_testB_ --fits_id 1 --beam_size 300 --register_num 64 --sp_num 64 --order_arg 1
+```
+
+ While, if you want to obtain further performance improvement, you need to perform relevant analysis according to the actual situation and organize threads reasonably to achieve the best performance. 
+
+```shell
+$ ./HCGrid --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 64
 ```
 
 ***Notice:***
