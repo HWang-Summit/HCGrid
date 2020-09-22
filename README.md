@@ -43,10 +43,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
 Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel, pre-sorting sample points and run the gridding function.
 1. Define a FITS header and define gridding kernel:
 ``` python
-/*Read input points*/
-lon,lat,data = read_input_map(...);
-
-/*define target FITS/WCS header*/
+# define target FITS/WCS header
 header = {
 	'NAXIS': 3,
 	'NAXIS1': dnaxis1,
@@ -197,9 +194,25 @@ In the terminal, change directory to HCGrid, then:
 | block_num  | The number of thread in each block  |
 | coarsening_factor| The value of coarsening factor|
 
-For example, you can type:
-``` C++
- ./HCGrid  --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 96
+After setting the relevant parameters (for example, sphere_radius in HCGrid.cpp, etc), perform gridding operation according to the following steps:
+
+1. Create the target map file:
+
+```shell
+$ python Creat_target_file.py -p /home/summit/Project/github/HCGrid-master/HCGrid/data/ -t target -n 1 -b 300
+```
+
+2. Compile HCGrid:
+
+```shell
+$ make clean
+$ make HCGrid
+```
+
+3. Utilizing  HCGrid do the gridding:
+
+``` shell
+$ ./HCGrid  --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 96
 ```
  ***Notice:***
  1. fits_path represents the absolute path to all FITS files (including input files, target map files, and output files).
