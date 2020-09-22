@@ -57,7 +57,6 @@ targetfile = os.path.join(wcs.__path__[0], path + tfile + num + '.fits')
 # Produce a FITS header that contains the target field.
 def setup_header(mapcenter, mapsize, pixsize, beamsize_fwhm):
     # define target grid (via fits header according to WCS convention)
-    # a good pixel size is a third of the FWHM of the PSF (avoids aliasing)
     dnaxis1 = int(mapsize[0] / pixsize)
     dnaxis2 = int(mapsize[1] / pixsize)
     print(pixsize, dnaxis1, dnaxis2)
@@ -87,6 +86,13 @@ def setup_target_data(my_header):
     datacube = np.zeros(yzx_shape, dtype=np.float32)
     return datacube
 
+# Parameter setting
+mapcenter = 60., 30.  # all in degrees
+map_size = 5.
+mapsize = map_size, map_size
+beamsize_fwhm = 2 * beam_size / 3600.
+# a good pixel size is a third of the FWHM of the PSF (avoids aliasing)
+pixsize = beamsize_fwhm / 3.
 
 # get target header
 my_header = setup_header(mapcenter, mapsize, pixsize, beamsize_fwhm)
