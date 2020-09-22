@@ -1,7 +1,3 @@
-<script type="text/javascript"
-   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 # HCGrid
 
 - *Version:* 1.0.0
@@ -220,6 +216,8 @@ $ make HCGrid
 For the thread organization configuration, the architecture of the GPU and the number of SPs in the
 SM should be carefully adjusted, in order to select the most appropriate scheme to improve the performance of GPU parallelization. For mainstream GPU architectures by NVIDIA, including Turing,
 Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
+
+http://chart.googleapis.com/chart?cht=tx&chl=\Large T_{max} = (Register\_{num}) / 184
 
 
 
