@@ -38,7 +38,7 @@ for opt, arg in opts:
         print(
             "usage: python Create_input_file.py -p <absolute path> -i <inputfile> -t <targetfile> -n <number> -b <beam size>")
         print(
-            'For example\n\tinput file: /home/summit/testfits/input1.fits\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: python Create_input_file.py -p /home/summit/testfits/ -i input -t target -n 1 -b 300')
+            'For example\n\ttarget file: /home/summit/testfits/target1.fits\n\tCommand: python Create_target_file.py -p /home/summit/testfits/ -t target -n 1 -b 300')
         sys.exit()
     elif opt in ["-p", "--path"]:
         path = arg
