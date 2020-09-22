@@ -123,9 +123,8 @@ void init_input_with_thrust(const int &sort_param) {
 3. Do the gridding.
 ``` C++
 /* Gridding process. */
-void solve_gridding(const char *infile, const char *tarfile, const char *outfile, const char *sortfile, 
-                    const int& param, const int &bDim) {
-
+void solve_gridding(const char *infile, const char *tarfile, const char *outfile, const char *sortfile, const int& param, const int &bDim) {
+    
     // Read input points.
     read_input_map(infile);
 
@@ -217,9 +216,6 @@ For the thread organization configuration, the architecture of the GPU and the n
 SM should be carefully adjusted, in order to select the most appropriate scheme to improve the performance of GPU parallelization. For mainstream GPU architectures by NVIDIA, including Turing,
 Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
 
-```text
-![](http://latex.codecogs.com/gif.latex?\\frac{1}{1+sin(x)})
-```
 
 $$
 T_{max} = (Register\_{num}) / 184
