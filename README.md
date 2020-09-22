@@ -218,7 +218,8 @@ SM should be carefully adjusted, in order to select the most appropriate scheme 
 Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
 
 ```text
-![](http://latex.codecogs.com/gif.latex?\\T_{max} = (Register\_{num}) / 184
+![](http://latex.codecogs.com/gif.latex?
+\T_{max} = (Register\_{num}) / 184
 ```
 
 $$
