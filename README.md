@@ -227,6 +227,7 @@ SP        &      & {32      <      SP <\frac {1}{2}T_{max}}\\
 T_{max}   &      & {SP >= \frac {1}{2}T_{max}}\\
 other    &      & {Based\ on\ astual\ test\ results}\\
 \end{array} \right.
+}
 $$
 
 $Register\_{num}$ represents the total number of registers available for each thread block of the GPU, and $T\_{max}$is the maximum number of threads that each thread block can execute simultaneously when running HCGrid. $SP$ is the number of SPs in each SM of the GPU.   
