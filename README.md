@@ -202,6 +202,8 @@ After setting the relevant parameters (for example, sphere_radius in HCGrid.cpp,
 $ python Creat_target_file.py -p /home/summit/Project/HCGrid/data/ -t target -n 1 -b 300
 ```
 
+**Note:** You need to set the relevant parameters of target_map according to the coverage sky area and beam width of the original sampled data. For details, please refer to "Creat_target_file.py " file.
+
 2. Compile HCGrid:
 
 ```shell
