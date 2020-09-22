@@ -1,17 +1,3 @@
-```
-<head>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$','$']]
-            }
-        });
-    </script>
-</head>
-```
-
 # HCGrid
 
 - *Version:* 1.0.0
@@ -231,10 +217,9 @@ For the thread organization configuration, the architecture of the GPU and the n
 SM should be carefully adjusted, in order to select the most appropriate scheme to improve the performance of GPU parallelization. For mainstream GPU architectures by NVIDIA, including Turing,
 Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM equals to 32 (for Fermi architecture). When taking thread configuration into consideration only, we get the empirical equation as follows:  
 
-$$
-T_{max} = (Register\_{num}) / 184
-$$
+<img src="http://latex.codecogs.com/svg.latex?T_{max}&space;=&space;(Register\_{num})&space;/&space;184" title="http://latex.codecogs.com/svg.latex?T_{max} = (Register\_{num}) / 184" />
 
+![image-20200922220617537](C:\Users\PC\AppData\Roaming\Typora\typora-user-images\image-20200922220617537.png)
 $$
 blockdim.x = \left\{
 \begin{array}{rcl}
