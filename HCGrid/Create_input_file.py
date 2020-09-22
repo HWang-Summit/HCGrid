@@ -101,6 +101,7 @@ def setup_data(mapcenter, mapsize, beamsize_fwhm, num_samples, num_sources):
 # set input data and input coords parameters
 mapcenter = 60., 30.  # all in degrees
 map_size = 5.
+pixsize = beamsize_fwhm / 3.
 mapsize = map_size, map_size
 beamsize_fwhm = 2 * beam_size / 3600.
 # num_samples = 100000000
@@ -125,10 +126,9 @@ hdulist.writeto(infile, overwrite=True, checksum=True)
 # print(fits.open(infile)[1].header)
 
 # Produce a FITS header that contains the target field.
-def setup_header(mapcenter, mapsize, beamsize_fwhm):
+def setup_header(mapcenter, mapsize, pixsize, beamsize_fwhm):
     # define target grid (via fits header according to WCS convention)
     # a good pixel size is a third of the FWHM of the PSF (avoids aliasing)
-    pixsize = beamsize_fwhm / 3.
     dnaxis1 = int(mapsize[0] / pixsize)
     dnaxis2 = int(mapsize[1] / pixsize)
     print(pixsize, dnaxis1, dnaxis2)
@@ -166,7 +166,7 @@ def setup_target_data(my_header, signal):
 
 
 # get target header
-my_header = setup_header(mapcenter, mapsize, beamsize_fwhm)
+my_header = setup_header(mapcenter, mapsize, pixsize, beamsize_fwhm)
 my_wcs = wcs.WCS(my_header, naxis=[wcs.WCSSUB_CELESTIAL])
 my_wcs = wcs.WCS(my_header)
 target_header = my_wcs.to_header()
