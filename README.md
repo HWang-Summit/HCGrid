@@ -1,6 +1,6 @@
 # HCGrid
 
-- *Version:* 0.9
+- *Version:* 1.0.0
 - *Authors:*
 
 ## Introduction
