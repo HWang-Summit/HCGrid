@@ -254,7 +254,7 @@ $ ./HCGrid --fits_path /home/summit/HCGrid/data/ --input_file in --target_file t
 ### Supplementary explanation
 For ease of testing and resulting verification, we provide "Create_input_file.py" and "Visualize.py" to generate test data and visualize the gridding results. In the terminal, in the path where the file is located, you can type "python Create_input.py -h" and "python Visyalize.py -h" separately to get the detail use guide. The figure below is an example of HCGrid gridding results.
 
-<P align="center"><img src=pic/T_B.png width="100%"></img></p>
+<P align="center"><img src=pic/Source-1_H.png width="100%"></img></p>
 
 ### Community Contribution and Advice
 
