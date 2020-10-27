@@ -307,6 +307,9 @@ __global__ void hcgrid (
         double disc_theta = HALFPI - b1[0];
         double disc_phi = l1[0];
         double utheta = disc_theta - d_const_GMaps.disc_size;
+        if (utheta * RAD2DEG < 0){
+            utheta = 0;
+        }
         uint64_t upix = d_ang2pix(utheta, disc_phi);
         uint64_t uring = d_pix2ring(upix);
         if (uring < d_const_Healpix.firstring){
@@ -335,12 +338,22 @@ __global__ void hcgrid (
             disc_phi = l1[0];
             uphi = disc_phi - d_const_GMaps.disc_size;
             uint64_t lpix = d_ang2pix(utheta, uphi);
+            if (disc_theta * RAD2DEG <= NORTH_B || disc_theta * RAD2DEG >= SOUTH_B){
+                lpix = startpix;
+            } else{
+                lpix = lpix;
+            }
             if (!(lpix >= startpix && lpix < startpix+num_pix_in_ring)) {
                 start_int = end_int;
                 continue;
             }
             uphi = disc_phi + d_const_GMaps.disc_size;
             uint64_t rpix = d_ang2pix(utheta, uphi);
+            if (disc_theta * RAD2DEG <= NORTH_B || disc_theta * RAD2DEG >= SOUTH_B){
+                rpix = startpix + num_pix_in_ring - 1;
+            } else{
+                rpix = rpix;
+            }
             if (!(rpix >= startpix && rpix < startpix+num_pix_in_ring)) {
                 start_int = end_int;
                 continue;

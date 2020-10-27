@@ -78,6 +78,8 @@ using namespace std;
 #define HALFPI (PI / 2.)
 #define INV_TWOPI (1.0 / TWOPI)
 #define INV_HALFPI (1. / HALFPI)
+#define NORTH_B (20)
+#define SOUTH_B (160)
 #define DEG2RAD (PI / 180.)
 #define RAD2DEG (180. / PI)
 
