@@ -235,13 +235,13 @@ $Register\_{num}$ represents the total number of registers available for each th
 When no specific performance analysis is performed for the actual application environment, users can use the following methods for gridding, and better performance may be obtained at this time.
 
 ```shell
-$ ./HCGrid --fits_path /home/summit/Project/cygrid/ --input_file input_testB_ --target_file target_testB_ --output_file output_testB_ --fits_id 1 --beam_size 300 --register_num 64 --sp_num 64 --order_arg 1
+$ ./HCGrid --fits_path /home/summit/Project/cygrid/ --input_file input --target_file target --output_file output --fits_id 1 --beam_size 300 --register_num 64 --sp_num 64 --order_arg 1
 ```
 
  While, if you want to obtain further performance improvement, you need to perform relevant analysis according to the actual situation and organize threads reasonably to achieve the best performance. 
 
 ```shell
-$ ./HCGrid --fits_path /home/summit/HCGrid/data/ --input_file in --target_file target --sorted_file sort --output_file out --fits_id 100 --beam_size 300 --order_arg 1 --block_num 64
+$ ./HCGrid --fits_path /home/summit/HCGrid/data/ --input_file input --target_file target --output_file output --fits_id 1 --beam_size 300 --order_arg 1 --block_num 64
 ```
 
 ***Notice:***
