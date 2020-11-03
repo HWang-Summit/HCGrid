@@ -92,7 +92,8 @@ map_size = 5.
 mapsize = map_size, map_size
 beamsize_fwhm = 2 * beam_size / 3600.
 # a good pixel size is a third of the FWHM of the PSF (avoids aliasing)
-pixsize = beamsize_fwhm / 3.
+# pixsize = beamsize_fwhm / 3.
+pixelsize = 0.01
 
 # get target header
 my_header = setup_header(mapcenter, mapsize, pixsize, beamsize_fwhm)

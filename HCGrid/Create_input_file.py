@@ -101,7 +101,9 @@ def setup_data(mapcenter, mapsize, beamsize_fwhm, num_samples, num_sources):
 # set input data and input coords parameters
 mapcenter = 60., 30.  # all in degrees
 map_size = 5.
-pixsize = beamsize_fwhm / 3.
+# a good pixel size is a third of the FWHM of the PSF (avoids aliasing)
+# pixsize = beamsize_fwhm / 3.
+pixelsize = 0.01
 mapsize = map_size, map_size
 beamsize_fwhm = 2 * beam_size / 3600.
 # num_samples = 100000000
