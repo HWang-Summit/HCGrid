@@ -4,8 +4,10 @@
 - *Authors:*
 
 ## Introduction
-Gridding refers to map the non-uniform sampled data to a uniform grid, which is one of the key steps in the data processing pipeline of the radio telescope. The computation performance is the main bottleneck of gridding, which affects the whole performance of the radio data reduction pipeline and even determines the release speed of available astronomical scientific data. For the single-dish radio telescope, the representative solution for this problem is implemented on the multi-CPU platform and that mainly based on the convolution gridding algorithm. Such methods can achieve a good performance through parallel threads on multi-CPU architecture, however, its performance is still limited to a certain extent by the homogeneous multi-core hardware architecture.
-HCGrid is a convolution-based gridding framework for radio astronomy in CPU/GPU heterogeneous platform, which can efficiently re-sample raw non-uniform sample data into a uniform grid of arbitrary resolution, generate Data Cube and save the processing result as FITS file. 
+Gridding operation, which is to map non-uniform data samples onto a uniformly distributed grid, is one of the key steps in radio astronomical data reduction process.   One of the main bottlenecks of gridding is the computing performance，to meet the challenge of massive data gridding for the
+modern large single-dish radio telescopes, e.g., the Five-hundred-meter Aperture Spherical radio Telescope (FAST), inspired by existing multi-core CPU gridding algorithms such as **Cygrid** (https://github.com/bwinkel/cygrid), here we present an easy-to-install, high-performance, and open-source convolutional gridding framework HCGrid, in CPU-GPU heterogeneous platforms.   
+
+The convolution-based algorithm is among the most common choice for gridding of radio astronomical data.  The algorithm we adopted is mainly from **Cygrid** by Winkel et al. (2016b).  (Paper: https://www.aanda.org/articles/aa/abs/2016/07/aa28475-16/aa28475-16.html).
 
 ## implementation
 <P align="center"><img src=pic/HCGrid.png width="50%"></img></p>
