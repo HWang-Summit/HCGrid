@@ -15,7 +15,7 @@ The main work of HCGrid include three-part:
 
 - **Initialization module:** This module mainly initializes some parameters involved in the calculation process, such as setting the size of the sampling space, output resolution and other parameters.
 - **Gridding module:** The core functional modules of the HCGrid. The key to improving gridding performance is to increase the speed of convolution calculations. First, in order to reduce the search space of the original sampling points, we use a parallel ordering algorithm to pre-order the sampling points based on HEALPix on the CPU platform and propose an efficient two-level lookup table to speed up the acquisition of sampling points. Then, accelerating convolution by utilizing the high parallelism of GPU and through related performance optimization strategies based on CUDA architecture to further improve the gridding performance.
-- **Results Process module:** Responsible for verifying the accuracy of gridding results; Save processing results as FITS files and visualize the computing results.
+- **Result-processing module,** which visualise the gridding results, as well as exporting the final products as FITS files.  
 
 ## Features
 - Supports WCS projection system as target.
@@ -185,16 +185,18 @@ In the terminal, change directory to HCGrid, then:
 
 | Parameter | Description |
 | :----------| :-----------------------------------|
-| fits_path  | Absolute path of FITS file          |
-| input_file | Name of unsorted input FITS file    |
-| target_file| Name of target FITS file            |
-| output_file| Name of output FITS file            |
-| sorted_file| Name of sorted input FITS file      |
-| fits_id    | ID of FITS file                     |
-| beam_size  | Beam size of FITS file              |
-| ord_arg    | Select the preorder function        |
-| block_num  | The number of thread in each block  |
-| coarsening_factor| The value of coarsening factor|
+| fits_path  | Absolute path of FITS file             |
+| input_file | Name of unsorted input FITS file       |
+| target_file| Name of target FITS file               |
+| output_file| Name of output FITS file               |
+| sorted_file| Name of sorted input FITS file         |
+| fits_id    | ID of FITS file                        |
+| beam_size  | Beam size of FITS file                 |
+|register_num| total number of registers for each threadblock of the GPU|
+|  sp_num    |the number of SPs in each SM of the GPU.|
+| ord_arg    | Select the preorder function           |
+| block_num  | The number of thread in each block     |
+| coarsening_factor| The value of coarsening factor   |
 
 After setting the relevant parameters (for example, sphere_radius in HCGrid.cpp, etc), perform gridding operation according to the following steps:
 
