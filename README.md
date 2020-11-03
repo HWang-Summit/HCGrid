@@ -44,7 +44,7 @@ We kept the dependencies as minimal as possible. The following packages are requ
 ## Usage
 ### DEMO
 Using HCGrid is extremely simple. Just define a FITS header(with valid WCS), define gridding kernel, pre-sorting sample points and run the gridding function.
-1. Define a FITS header and define gridding kernel:
+1. Define a FITS header in Creat_target_file.py
 ``` python
 # define target FITS/WCS header
 header = {
@@ -64,6 +64,7 @@ header = {
 	'CRVAL2': mapcenter[1],
 	}
 ```
+2. Define gridding kernel in gridding.cu
 ```c++
 /*Set kernel*/
 kernel_type = GAUSS1D;
@@ -80,7 +81,7 @@ _prepare_grid_kernel(
 	);
 ```
 
-2. Select a suitable pre-sorting interface to pre-sort sampling points. Our program provides a variety of pre-sorting interfaces to pre-order the sampling points. such as "BLOCK_INDIRECT_SORT", "PARALLEL_STABLE_SORT", etc. Through a series of experiments, we demonstrated that the BlockIndirectSort based on CPU multi-thread could achieve the best performance when dealing with large-scale data. So, we set BlockIndirectSort as the default pre-sorting interface in our program.
+3. Select a suitable pre-sorting interface to pre-sort sampling points. Our program provides a variety of pre-sorting interfaces to pre-order the sampling points. such as "BLOCK_INDIRECT_SORT", "PARALLEL_STABLE_SORT", etc. Through a series of experiments, we demonstrated that the BlockIndirectSort based on CPU multi-thread could achieve the best performance when dealing with large-scale data. So, we set BlockIndirectSort as the default pre-sorting interface in our program.
 
 ``` C++
 /* 
