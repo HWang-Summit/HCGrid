@@ -1,14 +1,14 @@
 CC          := clang
 CXX         := clang++
 AR          := ar -rc
-CUDA_PATH   ?=/usr/local/cuda-8.0
+CUDA_PATH   ?=/usr/local/cuda-10.2
 NVCC        :=$(CUDA_PATH)/bin/nvcc
-INCLUDE     :=-I/usr/local/cuda-8.0/include\
-			-I/usr/local/cuda-8.0/samples/common/inc\
-			-I/usr/include/c++\
-			-I/home/summit/HCGrid\
-			-I./
-LIBRARIES   :=-L/usr/local/cuda-8.0/lib64 -lcudart -lcufft
+INCLUDE     :=-I/home/summit/.local/cfitsio/include\
+			  -I/home/summit/.local/wcslib/include/wcslib\
+			  -I./
+LIBRARIES   :=-L/usr/local/cuda-8.0/lib64 -lcudart -lcufft\
+			  -L/home/summit/.local/cfitsio/lib\
+              -L/home/summit/.local/wcslib/lib
 CUDA_ARCH=-gencode arch=compute_35,code=sm_35 \
 		  -gencode arch=compute_50,code=sm_50 \
 		  -gencode arch=compute_60,code=sm_60
