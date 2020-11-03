@@ -225,20 +225,10 @@ Volta, Pascal, Kepler, Fermi, and Maxwell, the minimum number of SPs in each SM 
 
 <p  align="center", href="https://www.codecogs.com/eqnedit.php?latex=T_{max}&space;=&space;(Register_{num})&space;/&space;184" target="_blank"><img src="https://latex.codecogs.com/gif.latex?T_{max}&space;=&space;(Register_{num})&space;/&space;184" title="T_{max} = (Register_{num}) / 184" /></p> 
 
-$$
-T_{max} = (Register\_{num}) / 184
-$$
+<P align="center"><img src=pic/CodeCogsEqn.gif width="35%"></img></p>
 
-$$
-blockdim.x = \left\{
-\begin{array}{rcl}
-SP        &      & {32      <      SP <\frac {1}{2}T_{max}}\\
-T_{max}   &      & {SP >= \frac {1}{2}T_{max}}\\
-other    &      & {Based\ on\ astual\ test\ results}\\
-\end{array} \right.
-$$
 
-$Register\_{num}$ represents the total number of registers available for each thread block of the GPU, and $T\_{max}$is the maximum number of threads that each thread block can execute simultaneously when running HCGrid. $SP$ is the number of SPs in each SM of the GPU.   
+<a href="https://www.codecogs.com/eqnedit.php?latex=Register_{num}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Register_{num}" title="Register_{num}" /></a>represents the total number of registers available for each thread block of the GPU, and $T\_{max}$is the maximum number of threads that each thread block can execute simultaneously when running HCGrid. $SP$ is the number of SPs in each SM of the GPU.   
 
 When no specific performance analysis is performed for the actual application environment, users can use the following methods for gridding, and better performance may be obtained at this time.
 
