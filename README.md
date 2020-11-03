@@ -124,7 +124,8 @@ void init_input_with_thrust(const int &sort_param) {
     }
 }
 ```
-3. Do the gridding.
+4. Do the gridding.
+
 ``` C++
 /* Gridding process. */
 void solve_gridding(const char *infile, const char *tarfile, const char *outfile, const char *sortfile, const int& param, const int &bDim) {
