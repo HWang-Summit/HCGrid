@@ -6,7 +6,7 @@ NVCC        :=$(CUDA_PATH)/bin/nvcc
 INCLUDE     :=-I/home/summit/.local/cfitsio/include\
 			  -I/home/summit/.local/wcslib/include/wcslib\
 			  -I./
-LIBRARIES   :=-L/usr/local/cuda-8.0/lib64 -lcudart -lcufft\
+LIBRARIES   :=-L/usr/local/cuda-10.2/lib64 -lcudart -lcufft\
 			  -L/home/summit/.local/cfitsio/lib\
               -L/home/summit/.local/wcslib/lib
 CUDA_ARCH=-gencode arch=compute_35,code=sm_35 \
