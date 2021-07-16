@@ -17,7 +17,7 @@ HCGrid is a high performance gridding software for the spectral line data griddi
     + [HCGrid](#hcgrid-2)
     + [HCGrid+](#hcgrid--1)
     + [Minimal example](#minimal-example)
-    + [Community Contribution and Advice](#community-contribution-and-advice)
+  * [Community Contribution and Advice](#community-contribution-and-advice)
 
 
 
@@ -196,7 +196,7 @@ The former further specifies the relevant hardware parameters, please refer to o
  3. The parameter "block_num" represents the number of thread in each block. Changing the value of it will also change the number of block in the grid to realize the reasonable thread organization configuration. The best value of block_num has relationship with the register of GPU. For example, For Tesla K40, the total number of registers available per block is *64K*. And the compilation report shows that the kernel of HCGrid calls a total of 184 registers, because the kernel does not use shared memory to store parameters, so it is expected that each thread block can execute about 64K/184 $\approx$ 356 threads concurrently. So, the better value of block_num should close to 356.
   4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid. Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
 
-### Community Contribution and Advice
+## Community Contribution and Advice
 
 If you have any question or ideas, please don't skimp on your suggestions and welcome make a pull request. Moreover, you can contact us through the follow address.
 
