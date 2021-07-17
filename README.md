@@ -161,9 +161,9 @@ In the terminal window, after successful compilation, you can do the following t
 | sorted_file| Name of sorted input FITS file         |
 | fits_id    | ID of FITS file                        |
 | beam_size  | Beam size of FITS file                 |
-|register_num| total number of registers for each threadblock of the GPU|
+|register_num| total number of registers for each thread block of the GPU |
 |  sp_num    |the number of SPs in each SM of the GPU.|
-| ord_arg    | Select the preorder function           |
+| ord_arg    | Select the pre_order function      |
 | block_num  | The number of thread in each block     |
 | coarsening_factor| The value of coarsening factor   |
 
@@ -191,14 +191,15 @@ The former further specifies the relevant hardware parameters, please refer to o
 
 ***Notice:***
 
- 1. fits_path represents the absolute path to all FITS files (including input files, target map files, and output files).
- 2. The gridding framework not only supports storing the data after the gridding task is completed as a FITS file but also supporting storing the CPU multi-threaded sorted data as a FITS file. The reason for this is that can use the sorted data to analyze the performance of GPU-based convolution computation accurately. When typing the parameter of "sorted_file", the sorted data will be stored in FITS,otherwise, it will not save.
- 3. The parameter "block_num" represents the number of thread in each block. Changing the value of it will also change the number of block in the grid to realize the reasonable thread organization configuration. The best value of block_num has relationship with the register of GPU. For example, For Tesla K40, the total number of registers available per block is *64K*. And the compilation report shows that the kernel of HCGrid calls a total of 184 registers, because the kernel does not use shared memory to store parameters, so it is expected that each thread block can execute about 64K/184 $\approx$ 356 threads concurrently. So, the better value of block_num should close to 356.
-  4. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid. Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
+  1. fits_path represents the absolute path to all FITS / HDF5 files (including input files, target map files, and output files).
+  2. The parameter "block_num" represents the number of thread in each block. Changing the value of it will also change the number of block in the grid to realize the reasonable thread organization configuration. The best value of block_num has relationship with the register of GPU. For example, For Tesla K40, the total number of registers available per block is *64K*. And the compilation report shows that the kernel of HCGrid calls a total of 184 registers, because the kernel does not use shared memory to store parameters, so it is expected that each thread block can execute about 64K/184 $\approx$ 356 threads concurrently. So, the better value of block_num should close to 356.
+   3. Parameter "coarsening_factor" represents the value of coarsening factor $\gamma$. When applying thread coarsening strategy in practice, the factor $\gamma$ should be reasonable setting according to the resolution of the output grid. Through experiments, we found that a large $\gamma$ would reduce the accuracy of gridding, so we suggested that the selection range of $\gamma$ should be $\gamma=1,2,3$.
+   4. Considering the generality, HCGrid adopts FITS as the storage file format of sampling data in the early stage. In HCGrid+, in order to improve data processing efficiency and facilitate reading and writing in HCGrid+, we intend to use HDF5 as the data storage format, which is currently only in the planning stage and needs to be combined with the data storage methods of other steps in the spectral data processing pipeline, such as calibration, RFI, etc. For the HDF5 data layout of the test data, please refer to the file under the directory: /test/HDF5/.
+
 
 ## Community Contribution and Advice
 
-If you have any question or ideas, please don't skimp on your suggestions and welcome make a pull request. Moreover, you can contact us through the follow address.
+HCGrid / HCGrid+ is being further improved, if you have any question or ideas, please don't skimp on your suggestions and welcome make a pull request. Moreover, you can contact us through the follow address.
 
 - imwh@tju.edu.cn
 
