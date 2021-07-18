@@ -17,6 +17,10 @@ NVCC_FLAGS := -Wno-deprecated-gpu-targets -dc
 CXX_FLAGS := -std=c++11
 FITS_FLAGS := -lm -lcfitsio -lwcs
 
+HCGrid: helpers.o healpix.o gmap.o gridding.o HCGrid.o
+	@ echo ./$@ $+
+	$(NVCC) -O3 -ccbin $(CXX) -Wno-deprecated-gpu-targets $(INCLUDE) -o $@ $+ $(CUDA_ARCH) $(LIBRARIES) $(FITS_FLAGS) $(CXX_FLAGS)
+	
 helpers.o: helpers.cu
 #	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) --ptxas-options=-v $(INCLUDE) -o $@ -c $<
 	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) $(INCLUDE) -o $@ -c $<
@@ -34,10 +38,6 @@ gridding.o: gridding.cu
 
 HCGrid.o: HCGrid.cpp
 	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) $(CXX_FLAGS) $(INCLUDE) -o $@ -c $<
-
-HCGrid: helpers.o healpix.o gmap.o gridding.o HCGrid.o
-	@ echo ./$@ $+
-	$(NVCC) -O3 -ccbin $(CXX) -Wno-deprecated-gpu-targets $(INCLUDE) -o $@ $+ $(CUDA_ARCH) $(LIBRARIES) $(FITS_FLAGS) $(CXX_FLAGS)
 
 clean:
 	rm -rf *.o HCGrid
