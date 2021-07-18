@@ -41,7 +41,7 @@
 
 using boost::sort::block_indirect_sort;
 
-#define stream_size 10
+#define stream_size 5
 #define max_group_size 24
 cudaStream_t stream[stream_size];
 

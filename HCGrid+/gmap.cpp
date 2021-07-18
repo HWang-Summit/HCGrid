@@ -112,7 +112,7 @@ void read_input_coordinate(const char *infile){
     status = H5Aread(attr_id, H5T_NATIVE_INT, &numOfImputPoints);
     // printf("numofinput is: %d\n", numOfImputPoints);
     h_GMaps.data_shape = numOfImputPoints;
-    h_GMaps.spec_dim = 10;
+    h_GMaps.spec_dim = 5;
 
     //分配内存空间
     h_lons = RALLOC(double, numOfImputPoints); //longitude赤经ra

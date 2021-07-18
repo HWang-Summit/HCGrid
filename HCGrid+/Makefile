@@ -15,6 +15,10 @@ NVCC_FLAGS := -Wno-deprecated-gpu-targets -dc
 CXX_FLAGS := -std=c++11 -Xcompiler -fopenmp
 FITS_FLAGS := -lm -lcfitsio -lwcs -lhdf5 
 
+HCGrid: helpers.o healpix.o gmap.o gridding.o HCGrid.o
+	@ echo ./$@ $+
+	$(NVCC) -O3 -ccbin $(CXX) -Wno-deprecated-gpu-targets $(INCLUDE) -o $@ $+ $(CUDA_ARCH) $(LIBRARIES) $(FITS_FLAGS) $(CXX_FLAGS)
+	
 helpers.o: helpers.cu
 #	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) --ptxas-options=-v $(INCLUDE) -o $@ -c $<
 	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) $(INCLUDE) -o $@ -c $<
@@ -33,11 +37,5 @@ gridding.o: gridding-omp.cu
 HCGrid.o: HCGrid.cpp
 	$(NVCC) -O3 -ccbin $(CXX) $(NVCC_FLAGS) $(CXX_FLAGS) $(INCLUDE) -o $@ -c $<
 
-HCGrid: helpers.o healpix.o gmap.o gridding.o HCGrid.o
-	@ echo ./$@ $+
-	$(NVCC) -O3 -ccbin $(CXX) -Wno-deprecated-gpu-targets $(INCLUDE) -o $@ $+ $(CUDA_ARCH) $(LIBRARIES) $(FITS_FLAGS) $(CXX_FLAGS)
-
 clean:
 	rm -rf *.o HCGrid
-
-# ./HCGrid --fits_path /home/summit/Project/ICPP/HDF5/ --input_file input --target_file hdf_target --output_file output --fits_id 5 --beam_size 300 --order_arg 1 --block_num 64 --coarsening_factor 1
